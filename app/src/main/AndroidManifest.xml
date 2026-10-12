@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <application android:label="u07" android:allowBackup="false" android:theme="@android:style/Theme.Material.Light.NoActionBar" android:usesCleartextTraffic="false" android:icon="@drawable/u07_icon">
+    <activity android:name=".MainActivity" android:exported="true" android:configChanges="orientation|screenSize">
+      <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+    </activity>
+  </application>
+</manifest>

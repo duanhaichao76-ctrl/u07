@@ -1,0 +1,31 @@
+name: Publish u07 APK
+on:
+  push:
+    branches: [main]
+    paths: ['downloads/**', '.github/workflows/android.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify packaged APK checksum
+        working-directory: downloads
+        run: sha256sum -c SHA256SUMS.txt
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Verify APK signature
+        run: |
+          sdkmanager "build-tools;35.0.0"
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose downloads/u07-0.1.1-dev.apk
+      - name: Publish signed development APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view v0.1.1-dev >/dev/null 2>&1 || gh release create v0.1.1-dev --target "$GITHUB_SHA" --title 'u07 0.1.1 开发测试版' --notes 'Android 9+。设备日语合成语音，离线发音需安装日语语音包。已通过 APK 签名校验，尚未完成手机安装测试。开发签名；组合拗音笔顺暂需按单字练习。' --prerelease
+          gh release upload v0.1.1-dev downloads/u07-0.1.1-dev.apk downloads/SHA256SUMS.txt --clobber

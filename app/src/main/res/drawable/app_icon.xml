@@ -1,0 +1,1 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"><item><shape android:shape="rectangle"><solid android:color="#FFFFFF"/><corners android:radius="18dp"/></shape></item><item android:gravity="center"><bitmap android:src="@android:drawable/ic_menu_edit" android:tint="#111111" android:gravity="center"/></item></layer-list>
